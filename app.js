@@ -66,7 +66,7 @@ function initCanvas() {
     clickToSpinImg.onload = function() {
         overlayCanvas.getContext('2d').drawImage(clickToSpinImg, 0, 0, canvasSize, canvasSize);
     };
-    clickToSpinImg.src = '/images/spin.png';
+    clickToSpinImg.src = 'images/spin.png';
 }
 
 function initInputFields() {
@@ -269,7 +269,7 @@ function onSpinEnd() {
         ctxTop.fillStyle = "white";
         ctxTop.fillText(text, canvasSize / 2 - textHalfWidth, canvasSize / 2 + 10);
     };
-    resultImg.src = '/images/gradient.png';
+    resultImg.src = 'images/gradient.png';
     if (!isMuted) {
         document.getElementById("wheelAudioFinal").play();
     }
