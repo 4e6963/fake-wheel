@@ -81,6 +81,11 @@
         <script>
             const s1 = document.createElement('script');
             s1.src = 'wheel.js?v=' + _v;
+            s1.onload = function() {
+                const s2 = document.createElement('script');
+                s2.src = 'app.js?v=' + _v;
+                document.head.appendChild(s2);
+            };
             document.head.appendChild(s1);
         </script>
         <div class="ad-placeholder" style="min-height:250px;"><img src="fake-ads/1.png" alt="ad"/></div>
@@ -129,11 +134,6 @@
 
 
                 </div>
-                <script>
-                    const s2 = document.createElement('script');
-                    s2.src = 'app.js?v=' + _v;
-                    document.head.appendChild(s2);
-                </script>
                 <br/>
 
 
