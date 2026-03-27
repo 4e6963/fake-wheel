@@ -35,8 +35,8 @@ function initWheelGeometry() {
         firstSpinCycle = true;
     }
 
-    lastInputIndex = choices.length;
-    inputCount = lastInputIndex;
+    lastInputIndex = 0;
+    inputCount = 0;
 }
 
 function initCanvas() {
@@ -70,9 +70,17 @@ function initCanvas() {
 }
 
 function initInputFields() {
+    var container = document.getElementById('txtChoices');
     for (var i = 0; i < choices.length; i++) {
-        var input = $('input[name="c' + (i + 1) + '"]');
-        if (input.length) input.val(choices[i]);
+        var idx = i + 1;
+        var name = 'c' + idx;
+        var div = document.createElement('div');
+        div.setAttribute('id', 'strText' + idx);
+        div.setAttribute('class', 'input-group');
+        div.innerHTML = "<input class='form-control' type='text' id='" + name + "' name='" + name + "' value='" + choices[i].replace(/'/g, "&#39;") + "'/><span class='input-group-btn'><input type='button' value='X' onclick='removeElementID(" + idx + ");' tabindex='1000'></span>";
+        container.appendChild(div);
+        inputCount++;
+        lastInputIndex = idx;
     }
 }
 
@@ -84,7 +92,7 @@ function addElement() {
         var div = document.createElement('div');
         div.setAttribute('id', 'strText' + lastInputIndex);
         div.setAttribute('class', 'input-group');
-        div.innerHTML = "<input onfocus='addElementIfNeeded(" + lastInputIndex + ")' class='form-control' type='text' id='c" + lastInputIndex + "' name='c" + lastInputIndex + "'/><span class='input-group-btn' id='basic-addon2'><input type='button' value='X' onclick='removeElementID(" + lastInputIndex + ");' tabindex='1000'></span>";
+        div.innerHTML = "<input class='form-control' type='text' id='c" + lastInputIndex + "' name='c" + lastInputIndex + "'/><span class='input-group-btn' id='basic-addon2'><input type='button' value='X' onclick='removeElementID(" + lastInputIndex + ");' tabindex='1000'></span>";
         container.appendChild(div);
     } else {
         alert("Number of wheel slices cannot exceed 100. Visit our Business page to purchase a wheel beyond 100 slices.");
