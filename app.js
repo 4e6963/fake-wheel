@@ -290,6 +290,22 @@ $("#modifywheel").click(function() {
     $('html, body').animate({ scrollTop: $("#wheelBuilder").offset().top }, 1000);
 });
 
+$('form[name="input"]').submit(function(e) {
+    e.preventDefault();
+    var params = new URLSearchParams();
+    var idx = 1;
+    $(this).find('input[name^="c"]').each(function() {
+        var val = $(this).val().trim();
+        if (val !== '') {
+            params.set('c' + idx, val);
+            idx++;
+        }
+    });
+    var title = $(this).find('input[name="t"]').val().trim();
+    if (title !== '') params.set('t', title);
+    window.location.href = window.location.pathname + '?' + params.toString();
+});
+
 initInputFields();
 addTouchEventListeners();
 draw();
