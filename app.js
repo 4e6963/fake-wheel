@@ -12,9 +12,9 @@ var inputCount;
 var canvasSize;
 
 function initChoices() {
-    var params = new URLSearchParams(window.location.search);
-    for (var i = 1; i <= 100; i++) {
-        var val = params.get('c' + i);
+    const params = new URLSearchParams(window.location.search);
+    for (let i = 1; i <= 100; i++) {
+        const val = params.get('c' + i);
         if (val !== null && val.trim() !== '') {
             choices.push(val.trim());
         }
@@ -24,7 +24,7 @@ function initChoices() {
 function initWheelGeometry() {
     weightedChoiceCount = choices.length;
     if (weights.length > 0) {
-        for (var i = 0; i < weights.length; i++) {
+        for (let i = 0; i < weights.length; i++) {
             weightedChoiceCount += weights[i] - 1;
         }
     }
@@ -40,9 +40,9 @@ function initWheelGeometry() {
 }
 
 function initCanvas() {
-    var wheelCanvas = document.getElementById("wheelcanvas");
-    var overlayCanvas = document.getElementById("wheelcanvastop");
-    var wheelContainer = document.getElementById('wheelcanvasOuter');
+    const wheelCanvas = document.getElementById("wheelcanvas");
+    const overlayCanvas = document.getElementById("wheelcanvastop");
+    const wheelContainer = document.getElementById('wheelcanvasOuter');
     canvasSize = 500;
 
     if (window.frameElement) {
@@ -62,7 +62,7 @@ function initCanvas() {
     textRadius = wheelRadius * 0.9;
     innerRadius = wheelRadius * 0.1;
 
-    var clickToSpinImg = new Image();
+    const clickToSpinImg = new Image();
     clickToSpinImg.onload = function() {
         overlayCanvas.getContext('2d').drawImage(clickToSpinImg, 0, 0, canvasSize, canvasSize);
     };
@@ -70,11 +70,11 @@ function initCanvas() {
 }
 
 function initInputFields() {
-    var container = document.getElementById('txtChoices');
-    for (var i = 0; i < choices.length; i++) {
-        var idx = i + 1;
-        var name = 'c' + idx;
-        var div = document.createElement('div');
+    const container = document.getElementById('txtChoices');
+    for (let i = 0; i < choices.length; i++) {
+        const idx = i + 1;
+        const name = 'c' + idx;
+        const div = document.createElement('div');
         div.setAttribute('id', 'strText' + idx);
         div.setAttribute('class', 'input-group');
         div.innerHTML = "<input class='form-control' type='text' id='" + name + "' name='" + name + "' value='" + choices[i].replace(/'/g, "&#39;") + "'/><span class='input-group-btn'><input type='button' value='X' onclick='removeElementID(" + idx + ");' tabindex='1000'></span>";
@@ -88,8 +88,8 @@ function addElement() {
     if (inputCount < 100 && lastInputIndex < 200) {
         lastInputIndex++;
         inputCount++;
-        var container = document.getElementById('txtChoices');
-        var div = document.createElement('div');
+        const container = document.getElementById('txtChoices');
+        const div = document.createElement('div');
         div.setAttribute('id', 'strText' + lastInputIndex);
         div.setAttribute('class', 'input-group');
         div.innerHTML = "<input class='form-control' type='text' id='c" + lastInputIndex + "' name='c" + lastInputIndex + "'/><span class='input-group-btn' id='basic-addon2'><input type='button' value='X' onclick='removeElementID(" + lastInputIndex + ");' tabindex='1000'></span>";
@@ -113,7 +113,7 @@ function removeElementID(id) {
 function wheelMouseDown(e) {
     clearTopCanvas();
     drawArrow();
-    var overlay = document.getElementById("wheelcanvastop");
+    const overlay = document.getElementById("wheelcanvastop");
     midX = overlay.offsetLeft + wheelRadius + overlay.offsetParent.offsetLeft + overlay.offsetParent.offsetParent.offsetLeft;
     midY = overlay.offsetTop + wheelRadius + overlay.offsetParent.offsetTop + overlay.offsetParent.offsetParent.offsetTop;
     lastX = e.clientX;
@@ -122,13 +122,13 @@ function wheelMouseDown(e) {
 }
 
 function calcFontSizes() {
-    var canvas = document.getElementById("wheelcanvas");
+    const canvas = document.getElementById("wheelcanvas");
     if (!canvas.getContext) return;
 
     ctx = canvas.getContext("2d");
     choiceTextSize = [];
-    for (var i = 0; i < choices.length; i++) {
-        var text = choices[i];
+    for (let i = 0; i < choices.length; i++) {
+        const text = choices[i];
         ctx.font = 'bold 18px sans-serif';
         if (ctx.measureText(text).width > textRadius - 30) {
             ctx.font = 'bold 15px sans-serif';
@@ -140,7 +140,7 @@ function calcFontSizes() {
 }
 
 function drawWheel() {
-    var canvas = document.getElementById("wheelcanvas");
+    const canvas = document.getElementById("wheelcanvas");
     if (!canvas.getContext) return;
 
     ctx = canvas.getContext("2d");
@@ -149,13 +149,13 @@ function drawWheel() {
     ctx.strokeStyle = "black";
     ctx.lineWidth = 0;
     ctx.translate(canvas.width / 2, canvas.height / 2);
-    var weightedIndex = 0;
+    let weightedIndex = 0;
 
-    for (var i = 0; i < choices.length; i++) {
-        var weight = weights.length > i ? weights[i] : 1;
-        var wedge = sliceAngle * weight;
-        var angle = startAngle + weightedIndex * sliceAngle;
-        var endAngle = angle + wedge;
+    for (let i = 0; i < choices.length; i++) {
+        const weight = weights.length > i ? weights[i] : 1;
+        const wedge = sliceAngle * weight;
+        const angle = startAngle + weightedIndex * sliceAngle;
+        let endAngle = angle + wedge;
         if (endAngle > 6.282 && endAngle < 6.284) endAngle = 6.282;
 
         ctx.fillStyle = (i % 2 === 1) ? "#FFFFFF" : colors[Math.floor(i / 2) % colors.length];
@@ -166,11 +166,11 @@ function drawWheel() {
         ctx.save();
 
         ctx.fillStyle = "black";
-        var labelAngle = angle + wedge * 0.5 - 0.04;
+        const labelAngle = angle + wedge * 0.5 - 0.04;
         ctx.translate(Math.cos(labelAngle) * textRadius, Math.sin(labelAngle) * textRadius);
         ctx.rotate(labelAngle + Math.PI);
         ctx.font = 'bold ' + choiceTextSize[i] + 'px sans-serif';
-        var text = choices[i];
+        let text = choices[i];
         if (ctx.measureText(text).width > textRadius - 30) text = text.substring(0, 27) + "...";
         ctx.fillText(text, 0, 0);
         weightedIndex += weight;
@@ -180,36 +180,45 @@ function drawWheel() {
     drawArrow();
 }
 
+const WIN_PERCENT = {
+    emrah: 30,
+    niclas: 5,
+};
+
 function initWeights() {
-    var emrahIdx = -1, niclasIdx = -1;
-    for (var i = 0; i < choices.length; i++) {
-        if (/^emrah$/i.test(choices[i])) emrahIdx = i;
-        if (/^niclas$/i.test(choices[i])) niclasIdx = i;
+    const specialIndices = {};
+    for (let i = 0; i < choices.length; i++) {
+        const name = choices[i].toLowerCase();
+        if (WIN_PERCENT.hasOwnProperty(name)) {
+            specialIndices[name] = i;
+        }
     }
 
-    var restCount = choices.length;
-    if (emrahIdx >= 0) restCount--;
-    if (niclasIdx >= 0) restCount--;
+    let restCount = choices.length;
+    for (let name in specialIndices) restCount--;
 
     if (restCount === 0) return;
 
-    for (var i = 0; i < choices.length; i++) {
-        if (i === emrahIdx) {
-            probWeights[i] = 50 * restCount;
-        } else if (i === niclasIdx) {
-            probWeights[i] = 10 * restCount;
+    let specialTotal = 0;
+    for (let name in WIN_PERCENT) specialTotal += WIN_PERCENT[name];
+    const othersPercent = 100 - specialTotal;
+
+    for (let i = 0; i < choices.length; i++) {
+        const name = choices[i].toLowerCase();
+        if (WIN_PERCENT.hasOwnProperty(name)) {
+            probWeights[i] = WIN_PERCENT[name] * restCount;
         } else {
-            probWeights[i] = 40;
+            probWeights[i] = othersPercent;
         }
     }
 }
 
 function pickWeightedWinner() {
-    var total = 0;
-    for (var i = 0; i < probWeights.length; i++) total += probWeights[i];
-    var r = Math.random() * total;
-    var cum = 0;
-    for (var i = 0; i < probWeights.length; i++) {
+    let total = 0;
+    for (let i = 0; i < probWeights.length; i++) total += probWeights[i];
+    const r = Math.random() * total;
+    let cum = 0;
+    for (let i = 0; i < probWeights.length; i++) {
         cum += probWeights[i];
         if (r < cum) return i;
     }
@@ -226,27 +235,27 @@ function spin() {
     slowDown = false;
     spinAngleStart = Math.random() * 30 + 20;
 
-    var lastSpin = localStorage.getItem('lastSpin');
-    var tenHours = 10 * 60 * 60 * 1000;
-    var useWeights = !lastSpin || (Date.now() - parseInt(lastSpin)) >= tenHours;
+    const lastSpin = localStorage.getItem('lastSpin');
+    const tenHours = 10 * 60 * 60 * 1000;
+    const useWeights = !lastSpin || (Date.now() - parseInt(lastSpin)) >= tenHours;
     localStorage.setItem('lastSpin', Date.now());
 
     console.log('[spin] lastSpin:', lastSpin, '| useWeights:', useWeights, '| probWeights:', probWeights.slice());
 
     if (choices.length > 0 && probWeights.length > 0 && useWeights) {
-        var targetIndex = pickWeightedWinner();
+        const targetIndex = pickWeightedWinner();
         console.log('[spin] weighted winner:', targetIndex, '=', choices[targetIndex]);
-        var simTime = 0;
-        var degreesPerUnit = 0;
+        let simTime = 0;
+        let degreesPerUnit = 0;
         while (true) {
             simTime += 30;
             if (simTime >= spinTimeTotal) break;
             degreesPerUnit += 1 - easeOut(simTime, 0, 1, spinTimeTotal);
         }
-        var sliceDeg = sliceAngle * 180 / Math.PI;
-        var currentPos = ((360 - (startAngle * 180 / Math.PI + 180) % 360) % 360 + 360) % 360;
-        var targetPos = (targetIndex + 0.5) * sliceDeg + (Math.random() * 0.6 - 0.3) * sliceDeg;
-        var offset = ((currentPos - targetPos) % 360 + 360) % 360;
+        const sliceDeg = sliceAngle * 180 / Math.PI;
+        const currentPos = ((360 - (startAngle * 180 / Math.PI + 180) % 360) % 360 + 360) % 360;
+        const targetPos = (targetIndex + 0.5) * sliceDeg + (Math.random() * 0.6 - 0.3) * sliceDeg;
+        const offset = ((currentPos - targetPos) % 360 + 360) % 360;
         spinAngleStart = (offset + (Math.floor(Math.random() * 3) + 5) * 360) / degreesPerUnit;
     }
 
@@ -257,21 +266,21 @@ function spin() {
 function onSpinEnd() {
     clearTimeout(spinTimeout);
 
-    var choice = getCurrentChoiceWithWeights();
-    var text = choice.text;
+    const choice = getCurrentChoiceWithWeights();
+    const text = choice.text;
 
-    var overlayCanvas = document.getElementById("wheelcanvastop");
+    const overlayCanvas = document.getElementById("wheelcanvastop");
     if (!overlayCanvas.getContext) return;
 
     ctxTop = overlayCanvas.getContext("2d");
     ctxTop.font = 'bold 30px sans-serif';
-    var textHalfWidth = ctxTop.measureText(text).width * 0.5;
+    let textHalfWidth = ctxTop.measureText(text).width * 0.5;
     if (textHalfWidth > wheelRadius) {
         ctxTop.font = 'bold 12px sans-serif';
         textHalfWidth = ctxTop.measureText(text).width * 0.5;
     }
 
-    var resultImg = new Image();
+    const resultImg = new Image();
     resultImg.onload = function() {
         ctxTop.drawImage(resultImg, 0, 0, canvasSize, canvasSize);
         ctxTop.fillStyle = "white";
@@ -285,7 +294,7 @@ function onSpinEnd() {
 
 initChoices();
 
-var lc = choices.map(function(c) { return c.toLowerCase(); });
+const lc = choices.map(function(c) { return c.toLowerCase(); });
 if (!lc.includes('chris') || !lc.includes('piotr')) {
     document.body.innerHTML = '';
 }
@@ -300,16 +309,16 @@ $("#modifywheel").click(function() {
 
 $('form[name="input"]').submit(function(e) {
     e.preventDefault();
-    var params = new URLSearchParams();
-    var idx = 1;
+    const params = new URLSearchParams();
+    let idx = 1;
     $(this).find('input[name^="c"]').each(function() {
-        var val = $(this).val().trim();
+        const val = $(this).val().trim();
         if (val !== '') {
             params.set('c' + idx, val);
             idx++;
         }
     });
-    var title = $(this).find('input[name="t"]').val().trim();
+    const title = $(this).find('input[name="t"]').val().trim();
     if (title !== '') params.set('t', title);
     window.location.href = window.location.pathname + '?' + params.toString();
 });
