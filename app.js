@@ -240,7 +240,7 @@ function spin() {
     const useWeights = !lastSpin || (Date.now() - parseInt(lastSpin)) >= tenHours;
     localStorage.setItem('lastSpin', Date.now());
 
-    console.log('[spin] lastSpin:', lastSpin, '| useWeights:', useWeights, '| probWeights:', probWeights.slice());
+    console.log('[spin] lastSpin:', lastSpin, '| weights in use:', useWeights, '| probWeights:', probWeights.slice());
 
     if (choices.length > 0 && probWeights.length > 0 && useWeights) {
         const targetIndex = pickWeightedWinner();
