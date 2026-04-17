@@ -181,7 +181,7 @@ function drawWheel() {
 }
 
 const WIN_PERCENT = {
-    emrah: 15,
+    emrah: 25,
     niclas: 5,
 };
 
